@@ -17,8 +17,15 @@ load_dotenv()
 # ─────────────────────────────────────
 app = Flask(__name__)
 
-# Conecta ao banco de dados SQLite
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///feedback.db'
+# Configuração do Banco de Dados
+# Buscamos pelo nome da variável 'DATABASE_URL'
+raw_db_url = os.getenv('DATABASE_URL', '').strip()
+
+if raw_db_url.startswith("postgres://"):
+    # O SQLAlchemy exige 'postgresql://', mas o Neon/Render às vezes entregam 'postgres://'
+    raw_db_url = raw_db_url.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = raw_db_url or 'sqlite:///feedback.db'
 
 # Chave secreta — carregada de uma variável de ambiente por segurança
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
@@ -29,7 +36,8 @@ if not app.config['SECRET_KEY']:
 # Configurações de segurança da sessão
 # ─────────────────────────────────────
 app.config['SESSION_COOKIE_HTTPONLY'] = True   # JavaScript não acessa o cookie
-app.config['SESSION_COOKIE_SECURE']   = False  # Mude para True quando usar HTTPS
+# Ativa cookies seguros apenas se estivermos em produção (com banco de dados externo)
+app.config['SESSION_COOKIE_SECURE']   = bool(raw_db_url)
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)  # Sessão dura 30 min
 
@@ -41,7 +49,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)  # Sessão dura
 csrf = CSRFProtect(app)
 
 # Banco de dados
-db = SQLAlchemy(app)
+db = SQLAlchemy(app, engine_options={"pool_pre_ping": True})
 
 # Limitador de tentativas (evita brute-force e spam)
 limiter = Limiter(
@@ -66,6 +74,10 @@ class Feedback(db.Model):
     name    = db.Column(db.String(100), nullable=False)
     email   = db.Column(db.String(100), nullable=False)
     message = db.Column(db.Text, nullable=False)
+
+# Garante que as tabelas sejam criadas ao iniciar o app (essencial para Gunicorn no Render)
+with app.app_context():
+    db.create_all()
 
 # ─────────────────────────────────────
 # Decorator — protege páginas do admin
@@ -183,6 +195,5 @@ def delete_feedback(id):
 # Iniciando o servidor
 # ─────────────────────────────────────
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()  # Cria as tabelas se não existirem
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
