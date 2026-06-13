@@ -28,7 +28,7 @@ if raw_db_url.startswith("postgres://"):
 app.config['SQLALCHEMY_DATABASE_URI'] = raw_db_url or 'sqlite:///feedback.db'
 
 # Chave secreta — carregada de uma variável de ambiente por segurança
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', '').strip()
 if not app.config['SECRET_KEY']:
     raise ValueError("Defina a variável de ambiente SECRET_KEY antes de rodar!")
 
@@ -62,7 +62,7 @@ limiter = Limiter(
 # ─────────────────────────────────────
 # Senha do admin (carregada do ambiente)
 # ─────────────────────────────────────
-ADMIN_PASSWORD_HASH = os.environ.get('ADMIN_PASSWORD_HASH')
+ADMIN_PASSWORD_HASH = os.getenv('ADMIN_PASSWORD_HASH', '').strip()
 if not ADMIN_PASSWORD_HASH:
     raise ValueError("Defina a variável de ambiente ADMIN_PASSWORD_HASH antes de rodar!")
 
