@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
+
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('criadores') }}">Criadores</a>
+        <a href="{{ url_for('admin') }}">Admin</a>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">
+                {{ message }}
+                <span class="close-flash" onclick="this.parentElement.style.display='none'">&times;</span>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+<div class="admin-header">
+    <h1 data-aos="zoom-out">Gestão de Feedbacks</h1>
+    <div class="admin-header-actions" data-aos="fade-left">
+        <a href="{{ url_for('logout') }}" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
+    </div>
+</div>
+
+<div class="admin-stats-grid" data-aos="fade-up">
+    <div class="stat-card">
+        <i class="fas fa-envelope-open-text"></i>
+        <div class="stat-info">
+            <span>Mensagens Recebidas</span>
+            <strong>{{ total }}</strong>
+        </div>
+    </div>
+</div>
+
+<h2 data-aos="fade-right"><i class="fas fa-list"></i> Inbox Recente</h2>
+<p data-aos="fade-left">Acompanhe as sugestões e agradecimentos da comunidade:</p>
+
+<table class="admin-table" data-aos="fade-up">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Mensagem</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in feedbacks %}
+        <tr>
+            <td data-label="Nome">{{ f.name }}</td>
+            <td data-label="E-mail">{{ f.email }}</td>
+            <td data-label="Mensagem">
+                <div style="max-height: 80px; overflow-y: auto; font-size: 0.9em;">
+                    {{ f.message }}
+                </div>
+            </td>
+            <td data-label="Ação">
+                <form action="{{ url_for('delete_feedback', id=f.id) }}" method="POST" onsubmit="return confirm('Apagar esta mensagem?')">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn-delete">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div style="text-align: center; margin-top: 20px;">
+    <a href="{{ url_for('index') }}" class="btn-submit">Voltar</a>
+</div>
+    </div>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criadores - Doe Sangue ❤️</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
+
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('criadores') }}">Criadores</a>
+        <a href="{{ url_for('admin') }}">Admin</a>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">
+                {{ message }}
+                <span class="close-flash" onclick="this.parentElement.style.display='none'">&times;</span>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+    <h1 data-aos="zoom-out">Mentes por trás do Projeto</h1>
+    <p data-aos="fade-up">Conheça a equipe dedicada que deu vida a esta iniciativa de solidariedade.</p>
+
+    <div class="creators-grid">
+        <!-- Criador 1 -->
+        <div class="creator-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="creator-avatar"><i class="fas fa-laptop-code"></i></div>
+            <h3>Ricardo Lima Bastos</h3>
+            <div class="creator-role">Desenvolvedor Principal</div>
+            <div class="share-group">
+                <a href="https://instagram.com/ricardo_bastos.dev" target="_blank" class="btn-share instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/5577798549428" target="_blank" class="btn-share whatsapp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+
+        <!-- Criador 2 -->
+        <div class="creator-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="creator-avatar"><i class="fas fa-desktop"></i></div>
+            <h3>Ítalo Adriano V. Matos</h3>
+            <div class="creator-role">Tester PC</div>
+            <div class="share-group">
+                <a href="https://wa.me/5577981143741" target="_blank" class="btn-share whatsapp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+
+        <!-- Criador 3 -->
+        <div class="creator-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="creator-avatar"><i class="fas fa-mobile-alt"></i></div>
+            <h3>Eduardo Oliveira Marçal</h3>
+            <div class="creator-role">Tester Mobile</div>
+            <div class="share-group">
+                <a href="https://instagram.com/dudu.ofl" target="_blank" class="btn-share instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/557788034358" target="_blank" class="btn-share whatsapp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+
+        <!-- Criador 4 -->
+        <div class="creator-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="creator-avatar"><i class="fas fa-vials"></i></div>
+            <h3>Jefferson de Jesus Santos</h3>
+            <div class="creator-role">Tester Mobile</div>
+            <div class="share-group">
+                <a href="https://instagram.com/xs.jefferson55" target="_blank" class="btn-share instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/5577981419907" target="_blank" class="btn-share whatsapp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 80px; text-align: center;" data-aos="fade-up">
+        <h2 style="margin-top: 0;">Gratidão</h2>
+        <p>Agradecemos a todos os envolvidos na criação deste site e esperamos que ele seja útil para incentivar a doação de sangue e salvar vidas!</p>
+        <a href="{{ url_for('index') }}" class="btn-submit" style="margin-top: 30px;">Voltar para Home</a>
+    </div>
+
+    <footer style="margin-top: 80px; text-align: center; font-size: 14px; color: #666;">
+        <p>© 2026 - Campanha Doe Sangue. Todos os direitos reservados.</p>
+    </footer>
+    </div>
+
+    <!-- AOS (Animate On Scroll) JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializa as animações
+        AOS.init({ duration: 1000, once: true });
+
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (height > 0) {
+                var scrolled = (winScroll / height) * 100;
+                document.getElementById("myBar").style.width = scrolled + "%";
+            }
+        };
+    </script>
+</body>
+</html>

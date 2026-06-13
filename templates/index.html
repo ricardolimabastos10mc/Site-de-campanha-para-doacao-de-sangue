@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doe Sangue, Salve Vidas ❤️</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Meta Tags para Redes Sociais (Open Graph) -->
+    <meta property="og:title" content="Doe Sangue, Salve Vidas ❤️">
+    <meta property="og:description" content="Participe da nossa campanha de doação de sangue. Sua ajuda pode salvar até 4 vidas!">
+    <meta property="og:image" content="https://www.cbm.df.gov.br/wp-content/uploads/2022/03/DOACAO_SANGUE_01.jpg">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:type" content="website">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
+
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('criadores') }}">Criadores</a>
+        <a href="#feedback">Feedback</a>
+        <a href="{{ url_for('admin') }}">Admin</a>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">
+                {{ message }}
+                <span class="close-flash" onclick="this.parentElement.style.display='none'">&times;</span>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+    <div id="inicio" data-aos="fade-down"></div>
+    <div class="hero-header" style="text-align: center; margin-bottom: 80px;">
+        <h1 data-aos="zoom-out">Doe Sangue<br>Salve Vidas <span class="heart-icon">❤️</span></h1>
+        <p class="text-xl" data-aos="fade-up" style="font-size: 1.5rem; max-width: 750px; margin: 0 auto; line-height: 1.6; color: var(--text-muted); font-weight: 500; letter-spacing: -0.5px;">
+            O seu tipo sanguíneo é o tipo certo de alguém. <br>
+            <span style="color: var(--primary-red); font-weight: 800;">A sua doação é o milagre que alguém espera hoje.</span>
+        </p>
+    </div>
+
+    <h2 data-aos="fade-right"><i class="fas fa-hand-holding-heart"></i> Porque Doar Sangue?</h2>
+    <p data-aos="fade-left" style="text-align: justify;">
+        Doar sangue é uma forma de ajudar os outros e contribuir para a saúde da comunidade.
+        Além de salvar vidas, a doação de sangue também tem benefícios para o doador,
+        como exames médicos gratuitos e a sensação de realização.
+    </p>
+
+    <h2 id="passo-a-passo" data-aos="fade-up"><i class="fas fa-list-ol"></i> Passo a Passo da Doação</h2>
+    <div class="steps-container" data-aos="fade-up">
+        <div class="step-card" data-aos="zoom-in" data-aos-delay="100">
+            <i class="fas fa-clipboard-list"></i>
+            <strong>1. Recepção</strong><p>Cadastro e identificação</p>
+        </div>
+        <div class="step-card" data-aos="zoom-in" data-aos-delay="200">
+            <i class="fas fa-stethoscope"></i>
+            <strong>2. Triagem</strong><p>Entrevista e sinais vitais</p>
+        </div>
+        <div class="step-card" data-aos="zoom-in" data-aos-delay="300">
+            <i class="fas fa-tint"></i>
+            <strong>3. Coleta</strong><p>O ato de salvar vidas</p>
+        </div>
+        <div class="step-card" data-aos="zoom-in" data-aos-delay="400">
+            <i class="fas fa-utensils"></i>
+            <strong>4. Lanche</strong><p>Reposição de energias</p>
+        </div>
+    </div>
+
+    <h2 data-aos="fade-right"><i class="fas fa-map-marker-alt"></i> Como Doar Sangue?</h2>
+    <p data-aos="fade-left">
+        Para doar sangue, basta procurar um hemocentro ou uma campanha de doação de sangue em sua região.
+        O processo é simples e seguro, e os profissionais de saúde estarão lá para orientá-lo em cada etapa.
+        Lembre-se de levar um documento de identificação com foto no dia da doação.
+    </p>
+
+    <h2 data-aos="fade-up"><i class="fas fa-clipboard-check"></i> Requisitos para Doar Sangue</h2>
+    <ul class="requisitos-lista">
+        <li data-aos="fade-left" data-aos-delay="100"><i class="fas fa-calendar-alt"></i> <span>Ter entre 16 e 69 anos</span></li>
+        <li data-aos="fade-left" data-aos-delay="200"><i class="fas fa-weight"></i> <span>Pesar mais de 50 kg</span></li>
+        <li data-aos="fade-left" data-aos-delay="300"><i class="fas fa-heartbeat"></i> <span>Estar em boas condições de saúde</span></li>
+        <li data-aos="fade-left" data-aos-delay="400"><i class="fas fa-baby-carriage"></i> <span> Não estar grávida ou amamentando</span></li>
+    </ul>
+
+    <h2 data-aos="fade-right"><i class="fas fa-bullhorn"></i> Observações Importantes</h2>
+    <p data-aos="fade-left">
+        Se você tiver alguma dúvida sobre a doação de sangue ou quiser saber mais sobre os locais de doação, não hesite em entrar em contato com o hemocentro mais próximo.
+        Sua contribuição é valiosa e pode salvar muitas vidas. Doe sangue, seja um herói para alguém! ❤️
+    </p>
+
+    <h2 data-aos="fade-up"><i class="fas fa-thumbs-up"></i> Gostou da informação?</h2>
+    <p data-aos="fade-up">
+        Compartilhe esta mensagem com seus amigos e familiares para incentivar mais pessoas a doarem sangue.
+        Juntos, podemos fazer a diferença e salvar vidas! ❤️
+    </p>
+    
+    <div class="share-group" data-aos="zoom-in">
+        <a href="https://api.whatsapp.com/send?text=Olá! Veja como é importante doar sangue e salvar vidas: {{ request.url }}" 
+           target="_blank" class="btn-share whatsapp">
+           <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+
+        <button onclick="compartilharInstagram()" class="btn-share instagram">
+           <i class="fab fa-instagram"></i> Instagram
+        </button>
+
+        <button onclick="copiarLink()" class="btn-share copy">
+           <i class="fas fa-link"></i> Copiar Link
+        </button>
+    </div>
+
+    <h2 id="feedback" data-aos="fade-up"><i class="fas fa-comment-dots"></i> Fale com a gente!</h2>
+    <p data-aos="fade-left">
+        Sua opinião ajuda a salvar mais vidas. O que podemos melhorar? ❤️
+    </p>
+
+    <form action="{{ url_for('feedback') }}" method="post" class="feedback-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="form-group">
+            <label for="name">Seu Nome</label>
+            <input type="text" id="name" name="name" placeholder="Ex: João Silva" required>
+        </div>
+        <div class="form-group">
+            <label for="email">E-mail para contato</label>
+            <input type="email" id="email" name="email" placeholder="exemplo@email.com" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Sua Mensagem</label>
+            <textarea id="message" name="message" rows="4" placeholder="O que você achou do nosso site? (Máx. 500 caracteres)" maxlength="500" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Enviar Feedback</button>
+    </form>
+
+        <div style="text-align: center; margin-top: 30px;" data-aos="fade-up">
+            <a href="#inicio" class="back-to-top">↑ Voltar ao topo</a>
+        </div>
+
+        <footer style="margin-top: 60px; text-align: center; font-size: 14px; color: #666;">
+            <p>© 2026 - Campanha Doe Sangue. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- AOS (Animate On Scroll) JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializa as animações do AOS
+        AOS.init({ duration: 1000, once: true }); // duration: tempo da animação em ms, once: true para animar apenas uma vez
+
+        window.onscroll = function() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        };
+
+        async function copiarLink() {
+            await navigator.clipboard.writeText(window.location.href);
+            alert("Link copiado para a área de transferência!");
+        }
+
+        function compartilharInstagram() {
+            const url = window.location.href;
+            const text = "Olá! Veja como é importante doar sangue e salvar vidas!";
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Doe Sangue, Salve Vidas',
+                    text: text + " " + url,
+                    url: url
+                }).then(() => {
+                    console.log('Compartilhado com sucesso!');
+                }).catch((error) => {
+                    console.error('Erro ao compartilhar:', error);
+                });
+            } else {
+                alert('Desculpe, seu dispositivo não suporta compartilhamento direto. Por favor, copie e compartilhe o link manualmente: ' + url);
+            }
+        }
+    </script>
+</body>
+</html>
