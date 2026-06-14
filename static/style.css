@@ -724,7 +724,11 @@ li a {
         text-align: center;
     }
 
-    h1 { font-size: 1.6rem; }
+    h1 { 
+        font-size: 2.8rem; /* Aumentei de 1.6rem para manter o visual impactante */
+        letter-spacing: -1px; /* Reduzi o aperto para as letras não encostarem */
+        line-height: 1.1; 
+    }
     h2 { font-size: 1.1rem; }
 
     h1, h2 { margin-top: 20px; }
